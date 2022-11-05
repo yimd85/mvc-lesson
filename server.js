@@ -1,32 +1,9 @@
 require("dotenv").config();
 const express = require("express");
+const fruitController = require('./controllers/index'); //
 const app = express();
-
-const fruits = [
-    {
-        name: "apple",
-        color: "red",
-        readyToEat: true,
-    },
-    {
-        name: "pear",
-        color: "green",
-        readyToEat: false,
-    },
-    {
-        name: "banana",
-        color: "yellow",
-        readyToEat: true,
-    },
-];
-
-app.get("/fruits/", (req, res) => {
-    res.send(fruits);
-});
-
-app.get("/fruits/:indexOfFruitsArray", (req, res) => {
-    res.send(fruits[req.params.indexOfFruitsArray]);
-});
+app.use(express.static(__dirname + '/public'));//<---- this line serves up the css static files to our template
+app.use(fruitController); //<--- middle ware to use the routes
 
 app.listen(process.env.PORT, () => {
     console.log(`listening on port ${process.env.PORT}`);
